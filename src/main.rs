@@ -12,6 +12,7 @@ fn main() {
 // **NOTE**
 // - do NOT change any existing codes except that `todo!()`
 //
+// i 是不可边变量 无法修改
 fn change_value() {
     todo!()
 }
@@ -24,7 +25,10 @@ mod test {
 
         {
             // fix this line to make this test pass
-            a[10000000] = 1;
+            //a[10000000] = 1;
+            for _i in 0..=10000000 {
+                a.push(1)
+            }
         }
 
         assert_eq!(a[10000000], 1);
@@ -38,7 +42,9 @@ mod test {
 
         {
             // fix this line to make this test pass
-            b = a();
+            //b = a();
+            use futures::executor::block_on;
+            b = block_on(a);
         }
 
         assert_eq!(b, "Hello World!");
